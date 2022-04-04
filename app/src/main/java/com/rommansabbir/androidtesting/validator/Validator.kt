@@ -14,4 +14,9 @@ class Validator {
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                 ")+"
     )
+
+    @Throws(Exception::class)
+    fun validateNullObject(input: Any?): Boolean {
+        return if (input == null) throw Exception("Object is null") else true
+    }
 }
