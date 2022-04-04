@@ -25,4 +25,10 @@ class ValidatorTest {
         assertThrows<Exception> { validator.validateNullObject(null) }
     }
 
+    /*Check if a given object is not null*/
+    @Test
+    fun checkGivenObjectIsValid() {
+        assert(validator.validateNullObject(""))
+    }
+
 }
