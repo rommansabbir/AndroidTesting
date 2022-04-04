@@ -18,4 +18,11 @@ class ValidatorTest {
     fun testInvalidEmail() {
         assert(!validator.isEmailValid("test"))
     }
+
+    /*Check if Validator.validateNullObject throw Exception if the given object is null*/
+    @Test
+    fun testNullObjectThrowException() {
+        assertThrows<Exception> { validator.validateNullObject(null) }
+    }
+
 }
