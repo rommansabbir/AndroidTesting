@@ -51,4 +51,8 @@ dependencies {
 
     // Enable use of the JUnitPlatform Runner within the IDE
     testImplementation("org.junit.platform:junit-platform-runner:1.0.0-M4")
+
+    testImplementation 'org.robolectric:robolectric:4.5.1'
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 }
