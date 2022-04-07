@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rommansabbir.androidtesting.data.LoginModel
 import com.rommansabbir.androidtesting.data.LoginUseCase
 import com.rommansabbir.androidtesting.mock.MockData
 import com.rommansabbir.androidtesting.mock.MockDataProvider
 
 class MainViewModel constructor(
     private val dataSource: MockDataProvider,
-    public val useCase: LoginUseCase
+    private val useCase: LoginUseCase
 ) : ViewModel() {
     private var _list: MutableLiveData<MutableList<MockData>> = MutableLiveData()
     val list: LiveData<MutableList<MockData>>
@@ -20,7 +21,8 @@ class MainViewModel constructor(
         _list.value = dataSource.generateMockDataList()
     }
 
-/*    fun login(onSuccess: (String) -> Unit, onError: (Exception) -> Unit) {
-        LoginUseCase.execute(useCase, viewModelScope, onSuccess, onError)
-    }*/
+
+    fun login(loginModel: LoginModel, onSuccess: (String) -> Unit, onError: (Exception) -> Unit) {
+        LoginUseCase.execute(useCase, viewModelScope, loginModel, onSuccess, onError)
+    }
 }
