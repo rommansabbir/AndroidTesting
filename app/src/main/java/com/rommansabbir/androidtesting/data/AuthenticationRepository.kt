@@ -12,7 +12,6 @@ interface AuthenticationRepository {
 class AuthenticationRepositoryImpl : AuthenticationRepository {
     override suspend fun loginUser(username: String, password: String): Either<Exception, String> {
         return try {
-            throw Exception("Random Exception")
             if (username == "admin" && password == "1234567") {
                 Either.Right("Success")
             } else {
