@@ -63,4 +63,30 @@ internal class MainViewModelTest : TestCase() {
         assert(isInvoked)
         assert(isSuccess)
     }
+
+    /*We are using UseCase, which calls repository behind the scene
+    and all operation is backed by coroutine*/
+    @Test
+    fun verifyLoginFailureFromUseCase() {
+        var isInvoked = false
+        var isSuccess = false
+        viewModel.login(
+            LoginModel("admin", "32423423"),
+            {
+                isInvoked = true
+                isSuccess = true
+                println(it)
+            },
+            {
+                isInvoked = true
+                isSuccess = false
+                it.printStackTrace()
+            }
+        )
+        Thread.sleep(1000)
+        print("Is invoked : $isInvoked")
+        println("Is Success : $isSuccess")
+        assert(isInvoked)
+        assert(!isSuccess)
+    }
 }
