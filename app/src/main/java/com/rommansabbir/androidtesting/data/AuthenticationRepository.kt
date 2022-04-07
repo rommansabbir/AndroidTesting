@@ -3,7 +3,6 @@ package com.rommansabbir.androidtesting.data
 import com.rommansabbir.androidtesting.usecase.Either
 import com.rommansabbir.androidtesting.usecase.UseCase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 
 interface AuthenticationRepository {
     suspend fun loginUser(username: String, password: String): Either<Exception, String>
@@ -13,7 +12,6 @@ interface AuthenticationRepository {
 class AuthenticationRepositoryImpl : AuthenticationRepository {
     override suspend fun loginUser(username: String, password: String): Either<Exception, String> {
         return try {
-            delay(2000)
             if (username == "admin" && password == "1234567") {
                 Either.Right("Success")
             } else {
@@ -26,7 +24,6 @@ class AuthenticationRepositoryImpl : AuthenticationRepository {
 
     override suspend fun forgotPassword(username: String): Either<Exception, String> {
         return try {
-            delay(2000)
             if (username == "admin") {
                 Either.Right("Success")
             } else {
@@ -38,19 +35,22 @@ class AuthenticationRepositoryImpl : AuthenticationRepository {
     }
 }
 
+class LoginModel(val username: String, val password: String)
+
 class LoginUseCase(private val repository: AuthenticationRepository) :
-    UseCase<String, UseCase.None>() {
-    override suspend fun run(params: None): Either<Exception, String> =
-        repository.loginUser("admin", "12345655")
+    UseCase<String, LoginModel>() {
+    override suspend fun run(params: LoginModel): Either<Exception, String> =
+        repository.loginUser(params.username, params.password)
 
     companion object {
         fun execute(
             useCase: LoginUseCase,
             scope: CoroutineScope,
+            loginModel: LoginModel,
             onSuccess: (String) -> Unit,
             onError: (Exception) -> Unit
         ) {
-            useCase(scope, None()) { it.either(onError, onSuccess) }
+            useCase(scope, loginModel) { it.either(onError, onSuccess) }
         }
     }
 }
