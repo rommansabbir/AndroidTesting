@@ -105,4 +105,23 @@ internal class MainViewModelTest : TestCase() {
         assert(loginException is LoginException)
     }
 
+    /*To verify that if an exception happen during the login execution should return
+    an instance of Exception class*/
+    @Test
+    fun verifyLoginFailureFromUseCaseIsInstanceOfException() {
+        var loginException: Exception? = null
+        viewModel.login(
+            LoginModel("admin", "32423423"),
+            {
+                println(it)
+            },
+            {
+                loginException = it
+                println()
+            }
+        )
+        Thread.sleep(1000)
+        assert(loginException is Exception)
+    }
+
 }
