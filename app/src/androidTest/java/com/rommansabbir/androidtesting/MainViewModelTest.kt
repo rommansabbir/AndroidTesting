@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.rommansabbir.androidtesting.data.AuthenticationRepository
-import com.rommansabbir.androidtesting.data.AuthenticationRepositoryImpl
-import com.rommansabbir.androidtesting.data.LoginModel
-import com.rommansabbir.androidtesting.data.LoginUseCase
+import com.rommansabbir.androidtesting.data.*
 import com.rommansabbir.androidtesting.mock.MockDataProvider
 import junit.framework.TestCase
 import org.junit.Before
@@ -89,4 +86,23 @@ internal class MainViewModelTest : TestCase() {
         assert(isInvoked)
         assert(!isSuccess)
     }
+
+    /*To verify that the exception is LoginException is username or password is wrong*/
+    @Test
+    fun verifyLoginFailureFromUseCaseAsException() {
+        var loginException: Exception? = null
+        viewModel.login(
+            LoginModel("admin", "32423423"),
+            {
+                println(it)
+            },
+            {
+                loginException = it
+                println()
+            }
+        )
+        Thread.sleep(1000)
+        assert(loginException is LoginException)
+    }
+
 }
