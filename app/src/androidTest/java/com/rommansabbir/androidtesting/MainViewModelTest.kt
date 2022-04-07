@@ -124,4 +124,22 @@ internal class MainViewModelTest : TestCase() {
         assert(loginException is Exception)
     }
 
+    /*Verify that when login is success it should return success message as a String*/
+    @Test
+    fun verifyLoginSuccessShouldReturnSuccessMessageAsAString() {
+        var successMessage: String? = null
+        viewModel.login(
+            LoginModel("admin", "1234567"),
+            {
+                successMessage = it
+                println(it)
+            },
+            {
+                it.printStackTrace()
+            }
+        )
+        Thread.sleep(1000)
+        assert(successMessage == "Success")
+    }
+
 }
