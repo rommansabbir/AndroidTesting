@@ -15,7 +15,7 @@ class AuthenticationRepositoryImpl : AuthenticationRepository {
             if (username == "admin" && password == "1234567") {
                 Either.Right("Success")
             } else {
-                Either.Left(Exception("Auth error"))
+                Either.Left(LoginException())
             }
         } catch (e: Exception) {
             Either.Left(e)
@@ -54,3 +54,5 @@ class LoginUseCase(private val repository: AuthenticationRepository) :
         }
     }
 }
+
+class LoginException(override val message: String = "Failed to Login") : Exception(message)
