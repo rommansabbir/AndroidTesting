@@ -65,7 +65,7 @@ class LoginResponse {
 
 interface ApiEndpoint {
     @GET("login")
-    /*fun login(): Call<LoginResponse>*/
+            /*fun login(): Call<LoginResponse>*/
     fun login(): Call<ResponseBody>
 }
 
@@ -76,7 +76,7 @@ class MockInterceptor : Interceptor {
         if (BuildConfig.DEBUG) {
             val uri = chain.request().url.toUri().toString()
             val responseString = when {
-                uri.endsWith("login") -> getListOfReposBeingStarredJson
+                uri.endsWith("login") -> loginJson
                 else -> ""
             }
 
@@ -86,8 +86,7 @@ class MockInterceptor : Interceptor {
                 .protocol(Protocol.HTTP_2)
                 .message(responseString)
                 .body(
-                    responseString.toByteArray()
-                        .toResponseBody("application/json".toMediaTypeOrNull())
+                    responseString.toResponseBody("application/json".toMediaTypeOrNull())
                 )
                 .addHeader("content-type", "application/json")
                 .build()
@@ -101,4 +100,7 @@ class MockInterceptor : Interceptor {
     }
 }
 
-const val getListOfReposBeingStarredJson = "{\"name\":\"velmurugan\",\"address\":\"Chennai 600096\"}"
+const val loginJson = "{\n" +
+        "  \"name\" : \"Romman Sabbir\",\n" +
+        "  \"address\" : \"Nikunja-2, Khilkhet\"\n" +
+        "}"
